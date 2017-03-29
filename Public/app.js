@@ -20,6 +20,8 @@ angular.module('ui.bootstrap.demo').controller('AccordionDemoCtrl', function ($s
     $scope.items.push('Item ' + newItemNo);
   };
 
+
+
   $scope.status = {
     isCustomHeaderOpen: false,
     isFirstOpen: true,
@@ -41,24 +43,40 @@ $scope.customer = {
   street: '1234 Anywhere St.'
 };
 
+ $scope.updateFn = function(msg) {        
+        alert(msg);
+    };
+
 });
 // scope {} = nothing passes through
 // @ string with one way binding
 // = two way data binding with strings / objects (changes made in directive to value passed in will change the parent as well)
+// & parent scope can pass in a function (call back function)
 angular.module('ui.bootstrap.demo').directive('sharedScope', function(){
     return {
-                  template: 'Name: {{customer.name}} Street: {{customer.street}}'
+                  template: 'Name: {{customer.name}} Street: {{customer.street}} <br>'
     };
 } ) ;
 
 angular.module('ui.bootstrap.demo').directive('isolatedScope', function(){
     return {        scope: { name: '@', street: '@'},
-                  template: 'Name: {{name}} Street: {{street}}'
+                  template: 'Name: {{name}} Street: {{street}} <br>'
     };
 } ) ;
 
 angular.module('ui.bootstrap.demo').directive('isolatedScopeWithEquals', function(){
     return {        scope: { datasource: '='},
-                  template: 'Name: {{datasource.name}} Street: {{datasource.street}}'
+                  template: 'Name: {{datasource.name}} Street: {{datasource.street}} <br>'
     };
+} ) ;
+
+angular.module('ui.bootstrap.demo').directive('isolatedScopeWithFunction', function(){
+
+ var x = {        scope: {   updateFn: '&',
+                             datasource: '='},
+                  template: 'Name: {{datasource.name}} Street: {{datasource.street}}' +
+                   "<button ng-click='updateFn({msg : \"Hello World!\"})'>Click</button>"
+    };
+ 
+    return x;
 } ) ;
