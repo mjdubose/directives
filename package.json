@@ -1,36 +1,22 @@
 {
   "name": "redux-simple-starter",
   "version": "1.0.0",
-  "description": "Diablo 3 character viewer",
+  "description": "directives",
   "main": "index.js",
   "repository": "",
   "scripts": {
-    "start": "node ./server",
-    "test_Backend": "mocha test/Back/databaseTesting.js --require test/helper.js"
+    "start": "node ./server"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^3.5.0",
-    "chai-as-promised": "^6.0.0",
-    "chai-http": "^3.0.0",
-    "jquery": "^2.2.1",
-    "jsdom": "^8.1.0",
-    "mocha": "^3.1.0",
-    "react-addons-test-utils": "^0.14.7",
-    "supertest": "^2.0.0"
   },
   "dependencies": {
-    "axios": "^0.13.0",
-    "babel-plugin-transform-class-properties": "^6.10.2",
-    "battlenet-api": "^0.11.0",
+    "axios": "^0.13.0", 
     "core-js": "^2.4.1",
-    "express": "^4.14.0",
-    "knex": "^0.11.7",
+    "express": "^4.14.0",  
     "lodash": "^3.10.1",
-    "node-pre-gyp": "^0.6.29",
-    "pg": "^6.1.0",
-    "sqlite3": "^3.1.4",
+    "node-pre-gyp": "^0.6.29", 
     "underscore": "^1.8.3"
   }
 }

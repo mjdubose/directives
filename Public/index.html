@@ -1,295 +1,83 @@
-<!DOCTYPE html>
-<html ng-app="D3App"ng-cloak>
+<!doctype html>
+<html ng-app="ui.bootstrap.demo">
 
 <head>
-    <link href='/public/stylesheet.css' rel='stylesheet'>
-    <link href='/public/style.css' rel='stylesheet'>
-
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script src="/public/app.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body  class='body'>
-<Video class='background delay-fade' autoplay loop>
-    <source src="/public/videos/malthael.webm" type="video/webm"/>
-    <source src="/public/videos/malthael.mp4" type="video/mp4"/>
-</video>
+<body>
+    <div class="container">
+        <div class = "col-lg-11">
+            <div ng-controller="AccordionDemoCtrl">
+                <script type="text/ng-template" id="group-template.html">
+                    <div class="panel-heading">
+                        <h4 class="panel-title" style="color:#fa39c3">
+                            <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+                                <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+            {{heading}}
+          </span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div class="panel-collapse collapse" uib-collapse="!isOpen">
+                        <div class="panel-body" style="text-align: right" ng-transclude></div>
+                    </div>
+                </script>
 
-<div class='container' ng-controller="SearchBar">
+                <p>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="status.open = !status.open">Toggle last panel</button>
+                    <button type="button" class="btn btn-default btn-sm" ng-click="status.isFirstDisabled = ! status.isFirstDisabled">Enable / Disable first panel</button>
+                </p>
 
-    <div class='search-bar-and-heros-container'>
-
-        <div class='search-bar-inputs tooltip'>
-            <span class='tooltiptext'>"Well ... what can I do for ya?" - Griswold, Diablo 1.  <br> <br> Enter any North American Blizard battletag to retrieved all the Diablo 3 heros belonging to that battletag.  <br> <br> HURRY! The forces of evil aren't sitting idly by. <br> <br> "And may light protect you!"</span>
-            <input type='text' ng-model='battleTag'/>
-            <input style="cursor: url('/Public/images/CursorDI.png'), auto;" type='button'
-                   value='"I need a hero"- Bonnie Tyler' ng-click='getHeroInformation(battleTag)'
-            />
-                  <input style="cursor: url('/Public/images/CursorDI.png'), auto;" type='button'
-                   value='"Delete Profile' ng-click='deleteHeroInformation(battleTag)'
-            />
-        </div>
-
-        <div class='hero-names'>
-            <div ng-repeat='hero in heroList' ng-click='displayHeroInformation(hero)'>
-                <div class='hero' ng-model='hero'>
-                    {{hero.name}} - Lvl: {{hero.level}} , {{hero.class}}
+                <div class="checkbox">
+                    <label>
+      <input type="checkbox" ng-model="oneAtATime">
+      Open only one at a time
+    </label>
                 </div>
+                <uib-accordion close-others="oneAtATime">
+                    <div uib-accordion-group class="panel-default" heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                        This content is straight in the template.
+                    </div>
+                    <div uib-accordion-group class="panel-default" heading="{{group.title}}" ng-repeat="group in groups">
+                        {{group.content}}
+                    </div>
+                    <div uib-accordion-group class="panel-default" heading="Dynamic Body Content">
+                        <p>The body of the uib-accordion group grows to fit the contents</p>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
+                        <div ng-repeat="item in items">{{item}}</div>
+                    </div>
+                    <div uib-accordion-group class="panel-default" heading="Custom template" template-url="group-template.html">
+                        Hello
+                    </div>
+                    <div uib-accordion-group class="panel-default" is-open="status.isCustomHeaderOpen" template-url="group-template.html">
+                        <uib-accordion-heading>
+                            Custom template with custom header template <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeaderOpen, 'glyphicon-chevron-right': !status.isCustomHeaderOpen}"></i>
+                        </uib-accordion-heading>
+                        World
+                    </div>
+                    <div uib-accordion-group class="panel-danger" heading="Delete account">
+                        <p>Please, to delete your account, click the button below</p>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                    <div uib-accordion-group class="panel-default" is-open="status.open">
+                        <uib-accordion-heading>
+                            I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        </uib-accordion-heading>
+                        This is just some content to illustrate fancy headings.
+                    </div>
+                </uib-accordion>
             </div>
         </div>
+         <div class = "col-lg-1">
+             This is a test
+             </div>
     </div>
-
-    <div class='hero-equipment-container ' ng-controller='Displayer' ng-show="show" ng-cloak>
-        <div class='hero-stats'>
-        <div class='hero-stats-header' style="cursor: url('/Public/images/CursorDI.png'), auto;" ng-click='showStats()' ng-cloak>
-            Character stats <br> {{character.name}} - Lvl: {{character.level}} , {{character.class}} <br>
-            Paragon Level : {{character.paragonLevel}} <br>
-            Kills : {{character.kills}}<br>
-        </div>
-        <div class='border'>
-        </div>
-            <div class='stat-listing ' ng-show='statListing' ng-cloak>
-            <br>
-                <div class = "red">
-                Life:
-                </div>
-                <div class='chara-stat'>{{character.life}}</div> <br>
-                <div class = "red">
-                Damage:
-                </div>
-                <div class='chara-stat'> {{character.damage}}</div> <br>
-                <div class = "red">
-                Toughness:
-                </div><div class='chara-stat'> {{character.toughness}}</div> <br>
-               <div class = "red">
-                Healing:
-               </div><div class='chara-stat'> {{character.healing}}</div> <br>
-                <div class = "red">
-                Attack Speed:
-                </div><div class='chara-stat'> {{character.attackSpeed}}</div> <br>
-               <div class = "red">
-                Armor:
-               </div><div class='chara-stat'> {{character.armor}}</div> <br>
-                <div class = "red">
-                Strength:
-                </div><div class='chara-stat'> {{character.strength}}</div> <br>
-                <div class = "red">
-                Dexterity:
-                </div><div class='chara-stat'> {{character.dexterity}}</div> <br>
-               <div class = "red">
-                Vitality:
-               </div><div class='chara-stat'> {{character.vitality}}</div> <br>
-                <div class = "red">
-                Intelligence:
-                </div><div class='chara-stat'> {{character.intelligence}}</div> <br>
-                <div class='border' ng-cloak>
-                </div>
-                <div class = "red">
-                Physical Resist:
-                </div>
-                <div class='chara-stat'> {{character.physicalResist}}</div> <br>
-                <div class = "red">
-                Fire Resist:
-                </div>
-                <div class='chara-stat'> {{character.fireResist}}</div> <br>
-                <div class = "red">
-                Cold Resist:
-                </div>
-                <div class='chara-stat'>{{character.coldResist}}</div> <br>
-               <div class = "red">
-                Lightning Resist:
-               </div>
-               <div class='chara-stat'> {{character.lightningResist}}</div><br>
-                <div class = "red">
-                Poison Resist:
-                </div>
-                <div class='chara-stat'> {{character.poisonResist}}</div> <br>
-               <div class = "red">
-                Arcane Resist:
-               </div>
-               <div class='chara-stat'> {{character.arcaneResist}}</div><br>
-                <div class='border' ng-cloak>
-               </div>
-               <div class = "red">
-                Crit Damage:
-               </div><div class='chara-stat'> {{character.critDamage}}</div><br>
-               <div class = "red">
-                Block Chance:
-               </div><div class='chara-stat'> {{character.blockChance}}</div> <br>
-                <div class = "red">
-                Block Amount:
-                </div><div class='chara-stat'> {{character.blockAmountMin}}</div> <br>
-                <div class = "red">
-                Block Amount Max:
-                </div><div class='chara-stat'> {{character.blockAmountMax}}</div> <br>
-                <div class = "red">
-                Damage Increase:
-                </div><div class='chara-stat'> {{character.damageIncrease}}</div> <br>
-               <div class = "red">
-                Critical Chance:
-               </div><div class='chara-stat'>{{character.critChance}}</div> <br>
-               <div class = "red">
-                Damage Reduction:
-               </div><div class='chara-stat'> {{character.damageReduction}}</div> <br>
-                <div class = "red">
-                Thorn Damage:
-                </div><div class='chara-stat'> {{character.thorns}}</div> <br>
-                <div class = "red">
-                Life Steal :
-                </div><div class='chara-stat'> {{character.lifeSteal}}</div> <br>
-                <div class = "red">
-                Life Per Kill:
-                </div><div class='chara-stat'> {{character.lifePerKill}}</div> <br>
-                <div class = "red">
-                Gold Find:
-                </div><div class='chara-stat'> {{character.goldFind}}</div> <br>
-                <div class = "red">
-                Magic Find:
-                </div><div class='chara-stat'> {{character.magicFind}}</div> <br>
-                <div class = "red">
-                Life On Hit:
-                </div><div class='chara-stat'> {{character.lifeOnHit}}</div> <br>
-                <div class = "red">
-                Primary Resource:
-                </div><div class='chara-stat'> {{character.primaryResource}}</div> <br>
-                <div class = "red">
-                Secondary Resource:
-                </div><div class='chara-stat'> {{character.secondaryResource}}</div> <br>
-            </div>
-        </div>
-        <div class='hero-equipment '> 
-            <div class='hero-equipment-header' ng-click='showEquipment()'>Hero's Equipment</div>
-            <div class='border'></div>
-            <div class='equipment-scroll ' ng-show='equipment'>
-                <table class= 'hero-equipment-table'>
-                    <tr>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.shoulders.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.shoulders.icon}}.png"></a>
-                        </td>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.head.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.head.icon}}.png"></a>
-                        </td>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.neck.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.neck.icon}}.png"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.hands.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.hands.icon}}.png"></a>
-                        </td>
-                        <td class='equipment-cell' ><a href="https://us.battle.net/d3/en/{{character.torso.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.torso.icon}}.png"></a>
-                        </td>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.bracers.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.bracers.icon}}.png"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.rightFinger.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.rightFinger.icon}}.png"></a>
-                        </td>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.waist.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.waist.icon}}.png"></a>
-                        </td>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.leftFinger.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.leftFinger.icon}}.png"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.mainHand.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.mainHand.icon}}.png"></a>
-                        </td>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.legs.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.legs.icon}}.png"></a>
-                        </td>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.offHand.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.offHand.icon}}.png"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class='equipment-cell'></td>
-                        <td class='equipment-cell'><a href="https://us.battle.net/d3/en/{{character.feet.tooltipParams}}"><img
-                                src="http://media.blizzard.com/d3/icons/items/large/{{character.feet.icon}}.png"></a>
-                        </td>
-                        <td class='equipment-cell'></td>
-                    </tr>
-                </table>
-            </div>
-
-        </div>
-        <!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator
-//                                
-//http://media.blizzard.com/d3/icons/items/large/unique_gloves_set_02_p2_demonhunter_male.png 
-// icons are available for skills or items (items take large or small sizes, skills have pixel size allotments 21, 42 or 64);
-//.png name is stored in items or skills database table under icon.
--->
-        <div class="skills" ng-show="true">
-             skills
-             <div ng-repeat="skill in character.skills" class="single-skill">
-            <a href="https://us.battle.net/d3/en/class/{{character.class}}/{{skill.state}}/{{skill.slug}}"  /><img
-                                src="http://media.blizzard.com/d3/icons/skills/42/{{skill.icon}}.png"></a>
-              </div>
-        </div>
-    </div>
-
-    <div class='bottom-runner'></div>
-
-    <div class='butcher-container delay-fade'>
-        <div class='butcher-light heart-beat'></div>
-        <img class='butcher' src='/Public/images/Butcher.png' />
-    </div>
-
-    <div class='leoric-container delay-fade'>
-        <div class='leoric-light heart-beat'></div>
-        <img class='leoric' src='/Public/images/Leoric.png' />
-    </div>
-
-    <div class='tyrael-container delay-fade'>
-        <div class='tyrael-light heart-beat'></div>
-        <img class='tyrael' src='/Public/images/Tyrael.png' />
-    </div>
-
-    <div class='auriel-container delay-fade'>
-        <div class='auriel-light '></div>
-        <img class='auriel' src='/Public/images/Auriel.png' />
-    </div>
-
-    <div class='diablo-container '>
-        <div class='diablo-light heart-beat'></div>
-        <img class='diablo' src='/Public/images/Diablo.png' />
-    </div>
-
-</div>
-
-
-<!--  <script>
-const function run(interval, frames) {
-    var int = 1;
-    function func(){
-        document.body.class = 'b'+int
-        int++
-        if (int === frames) {int = 1;}
-    }
-    console.log(int)
-    var swap = window.setInterval(func, interval);
-}
-run (1000,10);
-<video xmlns="http://www.w3.org/1999/xhtml" id="malthael-video" class="video-bg is-active" loop="loop" poster="/public/images/malthael.jpg">
-</script> -->
-
-<audio className='audio' autoplay>
-    {"<source src='/Public/20-heaven-s-gate.mp3' type='audio/mp3'>"}
-</audio>
-
-<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.js'></script>
-<script src="/public/app.js"></script>
-
-<!-- script will download and display the tooltip parameters on any link pointing to a diablo 3 item skill or skill calculator
-//                                
-//http://media.blizzard.com/d3/icons/items/large/unique_gloves_set_02_p2_demonhunter_male.png 
-// icons are available for skills or items (items take large or small sizes, skills have pixel size allotments 21, 42 or 64);
-//.png name is stored in items or skills database table under icon.
--->
-
-<script src="http://us.battle.net/d3/static/js/tooltips.js"></script>
 </body>
 
 </html>
