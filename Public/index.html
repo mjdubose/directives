@@ -8,11 +8,13 @@
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
     <script src="/public/app.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/style.css" rel="stylesheet">
+
 </head>
 
 <body>
     <div class="container">
-        <div class="col-lg-11">
+        <div class="col-lg-9">
             <div ng-controller="AccordionDemoCtrl">
                 <script type="text/ng-template" id="group-template.html">
                     <div class="panel-heading">
@@ -74,19 +76,32 @@
                 </uib-accordion>
             </div>
         </div>
-        <div class="col-lg-1" ng-controller="CustomersController">
+        <div class="col-lg-3" ng-controller="CustomersController">
             <hello-world>
             </hello-world>
             <shared-scope>
             </shared-scope>
-            <isolated-scope name="{{customer.name}}" street ="{{customer.street}}">
+            <isolated-scope name="{{customer.name}}" street="{{customer.street}}">
             </isolated-scope>
             <isolated-scope-with-equals datasource="customer">
-            </isolated-scope-with-equals >
-            <isolated-scope-with-function  update-fn="updateFn(msg)"  datasource="customer"    >
+            </isolated-scope-with-equals>
+            <isolated-scope-with-function update-fn="updateFn(msg)" datasource="customer">
             </isolated-scope-with-function>
         </div>
+
     </div>
+    <div class="col-lg-2" ng-controller="DOMController">
+        <h3> Simple Dom directive </h3>
+        Mouse over the Click Me! <br /> <br />
+        <div link-demo> Click Me! </div>
+    </div>
+
+    <div data-ng-controller="DOMController" class="col-lg-10">
+        <h3>Table Helper DOM Directive</h3>
+        <table-helper datasource="customers" columnmap="[{name: 'Name'}, {street: 'Street'}, {age: 'Age'}, {url: 'URL', hidden: true}]">
+        </table-helper>
+    </div>
+
 </body>
 
 </html>

@@ -1,0 +1,5 @@
+     h3 { cursor: pointer }
+        th { text-align:left; background-color: #ccc;cursor:pointer;}
+        td { width:150px; }
+        .tableHelper { font-family: 'Arial' }
+        .rowCount { font-weight: bold; }
