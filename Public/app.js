@@ -146,18 +146,18 @@ angular.module('ui.bootstrap.demo').directive('tableHelperWithNgModel', function
       //     render();
       //   })
       // });  
-// second method of watching for ngModel to change
-    //  scope.$watch(attrs.ngModel,render);
+      // second method of watching for ngModel to change
+      //  scope.$watch(attrs.ngModel,render);
 
-    // scope.$watch(function(){
-    //   return ngModel.$modelValue; // hasn't been rendered to screen yet.  There is also a view model for input items.
-    // }, function(newValue){           //viewvalue
-    //   render();
-    // });
+      // scope.$watch(function(){
+      //   return ngModel.$modelValue; // hasn't been rendered to screen yet.  There is also a view model for input items.
+      // }, function(newValue){           //viewvalue
+      //   render();
+      // });
 
-    ngModel.$render = function(){
-           render();
-    };
+      ngModel.$render = function () {
+        render();
+      };
 
       wireEvents();
 
@@ -407,7 +407,7 @@ angular.module('ui.bootstrap.demo').directive('tableHelper', function () {
   };
 });
 
-angular.module('ui.bootstrap.demo').directive('tableHelperWithParse',['$parse', function ($parse) {
+angular.module('ui.bootstrap.demo').directive('tableHelperWithParse', ['$parse', function ($parse) {
   var template = '<div class="tableHelper"></div>',
 
     link = function (scope, element, attrs) {
@@ -418,17 +418,17 @@ angular.module('ui.bootstrap.demo').directive('tableHelperWithParse',['$parse', 
         visibleProps = [],
         sortCol = null,
         sortDir = 1,
-        columnmap =null;
+        columnmap = null;
 
       //Watch for changes to the collection so that the table gets
       //re-rendered as necessary
       scope.$watchCollection('datasource', render);
-     
-     // can do this
-    //  columnmap = scope.$eval(attrs.columnmap);
-    // or 
-    // you need to inject $parse
-    columnmap = $parse(attrs.columnmap)();
+
+      // can do this
+      //  columnmap = scope.$eval(attrs.columnmap);
+      // or 
+      // you need to inject $parse
+      columnmap = $parse(attrs.columnmap)();
 
       wireEvents();
 
@@ -502,7 +502,7 @@ angular.module('ui.bootstrap.demo').directive('tableHelperWithParse',['$parse', 
       }
 
       function getRawColumnName(friendlyCol) {
-       columnmap.forEach(function (colMap) {
+        columnmap.forEach(function (colMap) {
           for (var prop in colMap) {
             if (colMap[prop] === friendlyCol) {
               rawCol = prop;
@@ -536,7 +536,7 @@ angular.module('ui.bootstrap.demo').directive('tableHelperWithParse',['$parse', 
   return {
     restrict: 'E',
     scope: {
-     
+
       datasource: '='
     },
     link: link,
@@ -544,32 +544,32 @@ angular.module('ui.bootstrap.demo').directive('tableHelperWithParse',['$parse', 
   };
 }]);
 
-angular.module('ui.bootstrap.demo').directive('mapGeoLocation',[ '$window', function ($window) {
+angular.module('ui.bootstrap.demo').directive('mapGeoLocation', ['$window', function ($window) {
   var template = '<p><span id="status">looking up geolocation...</span></p>' +
-   '<br /><div id="map"></div>',
-   mapContainer =null,
-   status = null;
+    '<br /><div id="map"></div>',
+    mapContainer = null,
+    status = null;
 
-   function link(scope,elem, attrs){
-     status = angular.element(document.getElementById('status'));
-     mapContainer = angular.element(document.getElementById('map'));
-     mapContainer.attr('style','height:'+ scope.height + 'px; width:' + scope.width + 'px');
-     $window.navigator.geolocation.getCurrentPosition(mapLocation,geoError);
-   }
+  function link(scope, elem, attrs) {
+    status = angular.element(document.getElementById('status'));
+    mapContainer = angular.element(document.getElementById('map'));
+    mapContainer.attr('style', 'height:' + scope.height + 'px; width:' + scope.width + 'px');
+    $window.navigator.geolocation.getCurrentPosition(mapLocation, geoError);
+  }
 
-   function mapLocation(pos){
-     status.html('Found your location: Logitude: '+ pos.coords.longitude + 'Latitude: '+ pos.coords.latitude);
+  function mapLocation(pos) {
+    status.html('Found your location: Logitude: ' + pos.coords.longitude + 'Latitude: ' + pos.coords.latitude);
 
-  //   var latlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+    //   var latlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
 
-  //   var options = {
-  //     zoom: 15,
- //      center: latlng,
-  //     mapTypeControl: true,
- //      mapTypeId: google.maps.mapTypeId.ROADMAP
-   //  };
+    //   var options = {
+    //     zoom: 15,
+    //      center: latlng,
+    //     mapTypeControl: true,
+    //      mapTypeId: google.maps.mapTypeId.ROADMAP
+    //  };
 
-   //  var map = new google.maps.Map(mapContainer[0],options);
+    //  var map = new google.maps.Map(mapContainer[0],options);
 
     //  var marker = new google.maps.Marker({
     //    position: latlng,
@@ -578,10 +578,10 @@ angular.module('ui.bootstrap.demo').directive('mapGeoLocation',[ '$window', func
     //  });
 
 
-   }
- function geoError(error){
-   status.html('failed lookup ' + error.message);
- }
+  }
+  function geoError(error) {
+    status.html('failed lookup ' + error.message);
+  }
 
   return {
 
@@ -594,34 +594,89 @@ angular.module('ui.bootstrap.demo').directive('mapGeoLocation',[ '$window', func
   };
 }]);
 
-angular.module('ui.bootstrap.demo').directive('delayBind',['$interpolate',  function ($interpolate) {
-  var compile = function(tElement,tAttrs){
-        console.log('In compile');
-        var interpolateFunc =$interpolate(tAttrs.delayBind);
-        tAttrs.$set('delayBind',null); //clear so no bindings occur
+angular.module('ui.bootstrap.demo').directive('delayBind', ['$interpolate', function ($interpolate) {
+  var compile = function (tElement, tAttrs) {
+    console.log('In compile');
+    var interpolateFunc = $interpolate(tAttrs.delayBind);
+    tAttrs.$set('delayBind', null); //clear so no bindings occur
 
-        return {
-            pre: function(scope,elem,attrs){ console.log('In delayBind pre ' + elem[0].tagName);},
-            post: function(scope,elem,attrs) {
-              console.log('In delayBind post ' + elem[0].tagName);
-              elem.on(attrs.trigger,function(event){
-                var attr = attrs.attribute, val = interpolateFunc(scope);
+    return {
+      pre: function (scope, elem, attrs) { console.log('In delayBind pre ' + elem[0].tagName); },
+      post: function (scope, elem, attrs) {
+        console.log('In delayBind post ' + elem[0].tagName);
+        elem.on(attrs.trigger, function (event) {
+          var attr = attrs.attribute, val = interpolateFunc(scope);
 
-                if (attr && !elem.attr(attr)){
-                  elem.attr(attr,val);
-                }
-              });
-            }
+          if (attr && !elem.attr(attr)) {
+            elem.attr(attr, val);
+          }
+        });
+      }
 
-        };
+    };
 
   };
   return {
-restrict: 'A',
-  compile: compile
-   
+    restrict: 'A',
+    compile: compile
+
   };
 }]);
+
+
+
+angular.module('ui.bootstrap.demo').directive('withoutController', [function () {
+
+  var template = '<div></div>';
+
+  var link = function(scope,element,attrs){
+
+    var items = angular.copy(scope.datasource);
+
+    render();
+  function render() {
+    var html = '<ul>';
+    for (var i = 0; i < items.length; i++) {
+      html += '<li>' + items[i].name + '</li>';
+    }
+    html += '</ul>';
+    element.find('div').html(html);
+  }
+  };
+
+
+  return {
+    restrict: 'EA',
+    scope: {
+      datasource: '=',
+    },
+    link: link,
+    template: template
+
+  };
+}]);
+angular.module('ui.bootstrap.demo').directive('withController', [function () {
+
+  var template = '<ul><li ng-repeat="item in items"> {{::item.name }}</li></ul>',
+  controller = ['$scope', function($scope){
+    init();
+function init(){
+  $scope.items = angular.copy($scope.datasource);
+}
+  }];
+
+  return {
+    restrict: 'EA',
+    scope: {
+      datasource: '='
+      
+    },  
+    controller: controller, 
+    template: template
+
+  };
+}]);
+
 
 
 
