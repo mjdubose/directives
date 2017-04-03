@@ -100,6 +100,11 @@
         <h3>Table Helper DOM Directive</h3>
         <table-helper datasource="customers" columnmap="[{name: 'Name'}, {street: 'Street'}, {age: 'Age'}, {url: 'URL', hidden: true}]">
         </table-helper>
+
+        <h3> Table Helper with NG Model </h3>
+        <table-helper-with-ng-model ng-model="customers" columnmap="[{name: 'Name'}, {street: 'Street'}, {age: 'Age'}, {url: 'URL', hidden: true}]"  >
+        </table-helper-with-ng-model>
+
     </div>
 
 </body>
