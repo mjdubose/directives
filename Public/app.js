@@ -638,14 +638,14 @@ angular.module('ui.bootstrap.demo').directive('mapGeoLocation', ['$window', func
 
 angular.module('ui.bootstrap.demo').directive('delayBind', ['$interpolate', function ($interpolate) {
   var compile = function (tElement, tAttrs) {
-    console.log('In compile');
+   
     var interpolateFunc = $interpolate(tAttrs.delayBind);
     tAttrs.$set('delayBind', null); //clear so no bindings occur
 
     return {
-      pre: function (scope, elem, attrs) { console.log('In delayBind pre ' + elem[0].tagName); },
+      pre: function (scope, elem, attrs) {  },
       post: function (scope, elem, attrs) {
-        console.log('In delayBind post ' + elem[0].tagName);
+      
         elem.on(attrs.trigger, function (event) {
           var attr = attrs.attribute, val = interpolateFunc(scope);
 
@@ -717,7 +717,7 @@ angular.module('ui.bootstrap.demo').directive('withController', [function () {
       init();
       function init() {
         $scope.items = angular.copy($scope.datasource);
-        console.log($scope.items.length);
+       
       }
     }];
 
