@@ -701,9 +701,8 @@ angular.module('ui.bootstrap.demo').directive('withController', [function () {
   };
 }]);
 angular.module('ui.bootstrap.demo').directive("helpSlider", function () {
-  controller = ['$scope', function ($scope) {
-   
-   //  $scope.$watch('expand', resize);
+  controller = ['$scope', function ($scope) {   
+  
   
 
   }];
@@ -712,6 +711,7 @@ angular.module('ui.bootstrap.demo').directive("helpSlider", function () {
     restrict: "EA",
     scope: {
       expand: '=',
+      
     },
     controller: controller,
     replace: true,
