@@ -27,10 +27,45 @@ angular.module('ui.bootstrap.demo').controller('AccordionDemoCtrl', function ($s
   };
 });
 angular.module('ui.bootstrap.demo').controller('HelpPanel', function ($scope) {
-   $scope.toggle =false;
-  $scope.toggleSlider=function(){
-        $scope.toggle = !$scope.toggle;    
+  $scope.toggle = false;
+  $scope.toggleSlider = function () {
+    $scope.toggle = !$scope.toggle;
   };
+
+ $scope.itemArray = ['agency','authority','default'];
+  $scope.language = ['en','es'];
+    $scope.selectedItem ='';
+    $scope.selectedLanguage='' ;
+    var count1 =0;
+  var count2=0;
+
+  $scope.helpWalk = function(){  
+
+count2 = count2 +1;
+
+if (count2 < $scope.language.length){
+  $scope.selectedItem = $scope.itemArray[count1];
+  $scope.selectedLanguage = $scope.language[count2];
+} else {
+     count2 =0;
+     count1 = count1 +1;
+     if (count1 < $scope.itemArray.length ){
+         $scope.selectedItem = $scope.itemArray[count1];
+         $scope.selectedLanguage = $scope.language[count2];
+     }
+     else {
+       count1=0;
+          $scope.selectedItem = $scope.itemArray[count1];
+         $scope.selectedLanguage = $scope.language[count2];
+     }
+}
+
+
+
+  }
+
+  $scope.selectedItem='default';
+  $scope.selectedLanguage ='en';
 
 });
 
@@ -633,11 +668,8 @@ angular.module('ui.bootstrap.demo').directive('delayBind', ['$interpolate', func
 
 
 angular.module('ui.bootstrap.demo').directive('withoutController', [function () {
-
   var template = '<div></div>';
-
   var link = function (scope, element, attrs) {
-
     var items = angular.copy(scope.datasource);
 
     render();
@@ -701,102 +733,52 @@ angular.module('ui.bootstrap.demo').directive('withController', [function () {
   };
 }]);
 angular.module('ui.bootstrap.demo').directive("helpSlider", function () {
-  controller = ['$scope', function ($scope) {   
-  
-  
-
-  }];
-
   return {
     restrict: "EA",
     scope: {
       expand: '=',
-      
+      language: '=',
+      item: '='
     },
-    controller: controller,
+
     replace: true,
     transclude: "element",
-    template: '<div class="col-lg-12">'+ '<div ng-class="' + "expand ? 'col-lg-9' : 'col-lg-12'" + ' " >' +
+    template: '<div class="col-lg-12"> ' + '<div ng-class="' + "expand ? 'col-lg-9' : 'col-lg-12'" + ' " >' +
     "<div ng-transclude></div></div>" +
-    ' <div ng-show="expand" class="col-lg-3" > Here is some help content.. blah.. blah.. blah.. blah </div>' +
+    ' <div ng-show="expand" class="col-lg-3" ><help-Content language="language" item ="item"></help-Content> </div>' +
     "</div></div>"
 
   }
 });
+angular.module('ui.bootstrap.demo').directive('helpContent', function() {
+  return {
+    restrict: 'EA',
+    scope: {
+      language: '=',
+      item: '='
+    },
+    link: function($scope)
+    { 
+          $scope.dynamicTemplateUrl = 'public/'+$scope.item+'-' + $scope. language + '-help.html';
+       $scope.$watch('item', function(item)
+       {
+         if (item && item.length)
+         {
+          $scope.dynamicTemplateUrl = 'public/'+item+'-' + $scope. language + '-help.html';
+         }
+       });
+         $scope.$watch('language', function(language)
+       {
+         if (language&& language.length)
+         {
+          $scope.dynamicTemplateUrl = 'public/'+$scope.item+'-' +  language + '-help.html';
+         }
+       });
+    },
 
-// angular.module('ui.bootstrap.demo').directive('tableHelperWithController', [function () {
-
-// var  controller = ['$scope', function($scope){
-//   var vm = this,
-//   visibleProps =[];
-
-//   vm.columns=[];
-//   vm.reverse = false;
-//   vm.orderby;
-
-//   $scope.$watchCollection('datasource',getColumns);
-
-//   vm.sort = function(col){
-//     if (vm.columnmap){
-//       rawCol = getRawColumnName(col);
-//       vm.reverse = (vm.orderby == rawCol) ? !vm.reverse: false;
-//       vm.orderby = rawCol;
-//     }
-//     else {
-//       vm.reverse = (vm.orderby === col) ? !vm.reverse: false;
-//       vm.orderby = rawCol;
-//     }
-//   };
-
-//   vm.getRowValues = function(row){
-//     var sortedValues=[];
-//     if (vm.columnmap){
-
-//     }
-//   }
-
-//   function getColumns(){
-
-//     vm.columnmap = $scope.$eval(vm.columnmap);
-
-//     if (vm.columnmap){
-//       vm.columnmap.forEach(function(map){
-//         if(!map.hidden){
-//           for (var prop in map){
-//             if (prop !== 'hidden') pushColumns(prop,map[prop]);
-//           }
-//         }
-//       });
-//     } else {
-//       for (var prop in vm.datasource[0]){
-//         pushColumns(prop,prop);
-//       }
-//     }
-
-//   }
-
-//   funct
-//     init();
-// function init(){
-//   $scope.items = angular.copy($scope.datasource);
-// }
-//   }];
-
-//   return {
-//     restrict: 'E',
-//     replace: true,
-//     scope: {
-//       columnmap: '@',
-//       datasource:'='      
-//     },  
-//     controller: controller, 
-//     controllerAs: 'vm',
-//     bindToController: true,
-//     templateUrl: 'tableHelper.html'
-
-//   };
-// }]);
-
+    template: '<ng-include src="dynamicTemplateUrl"></ng-include>'
+  };
+});
 
 
 

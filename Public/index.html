@@ -17,8 +17,9 @@
     <div class="container">
         <div ng-controller="HelpPanel" >
             <button ng-click="toggleSlider()">help</button>
-            {{toggle}}
-        <div help-Slider expand='toggle'>
+            <button ng-click="helpWalk()">help walk</button>
+            {{selectedItem}}{{selectedLanguage}}
+        <div help-Slider expand='toggle' item='selectedItem' language="selectedLanguage">
             <table>
                 <tr>
                     <th> Name </th>
