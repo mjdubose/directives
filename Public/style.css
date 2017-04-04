@@ -3,3 +3,14 @@
         td { width:150px; }
         .tableHelper { font-family: 'Arial' }
         .rowCount { font-weight: bold; }
+        .nb-map-details-button-expand{background:#fff;position:absolute;padding:6px 8px 7px 6px;border-radius:0px 7px 7px 0px;font-size:16px;top:70px;left:330px;width:8px;color:grey;cursor:pointer;border:1px solid #999999;border-left-width:0px;box-shadow:1px 1px grey;font-weight:bold;transition:all .5s ease-in-out;pointer-events:auto}
+        .nb-map-details-button-contract{background:#fff;position:absolute;padding:6px 8px 7px 6px;border-radius:0px 7px 7px 0px;font-size:16px;top:70px;left:600px;width:8px;color:grey;cursor:pointer;border:1px solid #999999;border-left-width:0px;box-shadow:1px 1px grey;font-weight:bold;transition:all .5s ease-in-out;pointer-events:auto}
+        .nb-map-details-button-expand:hover{padding:6px 8px 7px 10px}
+        .nb-map-details-button-contract:hover{padding:6px 8px 7px 10px}
+        .nb-map-details-button-data-view-open{background:#fff;position:absolute;padding:6px 8px 7px 6px;border-radius:0px 7px 7px 0px;font-size:16px;top:70px;left:0;width:8px;color:grey;cursor:pointer;border:1px solid #999999;border-left-width:0px;box-shadow:1px 1px grey;font-weight:bold;transition:all .5s ease-in-out;pointer-events:auto}
+       
+       
+      
+
+
+
