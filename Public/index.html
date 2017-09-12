@@ -8,126 +8,112 @@
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
     <!--   <script src="http://maps.google.com/maps/api/js"></script> -->
     <script src="/public/app.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//nedivna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="/public/style.css" rel="stylesheet">
 
 </head>
 
-<body>
-    <div class="container">
-        <div ng-controller="HelpPanel" >
-            <button ng-click="toggleSlider()">help</button>
-            <button ng-click="helpWalk()">help walk</button>
-            {{selectedItem}}{{selectedLanguage}}
-        <div help-Slider expand='toggle' item='selectedItem' language="selectedLanguage">
-            <table>
-                <tr>
-                    <th> Name </th>
-                    <th> Address</th>
-                    <th> City </th>
-                    <th> State</th>
-                    <th> Zip </th>
-                    <th> Country </th>
-                </tr>
-                <tr>
-                    <td> Fred Rogers </td>
-                    <td> 123 Some Address Street </td>
-                    <td> Roanoke </td>
-                    <td> West Virginia </td>
-                    <td> 999999 </td>
-                    <td> USA </td>
-                </tr>
-                <tr>
-                    <td> Fred Rogers </td>
-                    <td> 123 Some Address Street </td>
-                    <td> Roanoke </td>
-                    <td> West Virginia </td>
-                    <td> 999999 </td>
-                    <td> USA </td>
-                </tr>
-                <tr>
-                    <td> Fred Rogers </td>
-                    <td> 123 Some Address Street </td>
-                    <td> Roanoke </td>
-                    <td> West Virginia </td>
-                    <td> 999999 </td>
-                    <td> USA </td>
-                </tr>
-                <tr>
-                    <td> Fred Rogers </td>
-                    <td> 123 Some Address Street </td>
-                    <td> Roanoke </td>
-                    <td> West Virginia </td>
-                    <td> 999999 </td>
-                    <td> USA </td>
-                </tr>
-            </table>
-        </div>
-        <div>
+<body >
+    <div>
+        <div class="container">
+            <div ng-controller="HelpPanel">
+                <button ng-click="toggleSlider()">help</button>
+                <button ng-click="helpWalk()">help walk</button> {{selectedItem}}{{selectedLanguage}}
+                <div help-Slider expand='toggle' item='selectedItem' language="selectedLanguage">
+                    <div ng-controller="FlexController">
+                        <div class="container-fluid" style="margin-top: 10px">
+                            <div class="table-row header">
+                                <div class="text"> Name </div>
+                                <div class="text"> Street</div>
+                                <div class="text"> Age</div>
+                                <div class="text"> Url</div>                         
 
-        <div class="col-lg-3" ng-controller="CustomersController">
-            <hello-world>
-            </hello-world>
-            <shared-scope>
-            </shared-scope>
-            <isolated-scope name="{{customer.name}}" street="{{customer.street}}">
-            </isolated-scope>
-            <isolated-scope-with-equals datasource="customer">
-            </isolated-scope-with-equals>
-            <isolated-scope-with-function update-fn="updateFn(msg)" datasource="customer">
-            </isolated-scope-with-function>
-        </div>
+                            </div>
+                            <div class="table-content">
+                                   
+                            <div class="table-row" ng-repeat="customer in customers track by $id(customer)">
+                                <div class="text"> {{customer.name}} </div>
+                                <div class="text"> {{customer.street}} </div>
+                                <div class="text"> {{customer.age}}</div>
+                                <div class="text"> {{customer.url}} </div>                        
+                            </div>
+                        </div>
+                        <div class='footer'>
+                    
+                     This is a test of the flex broadcasting system!!
 
 
-        <div class="col-lg-2" ng-controller="DOMController">
-            <h3> Simple Dom directive </h3>
-            Mouse over the Click Me! <br /> <br />
-            <div link-demo> Click Me! </div>
-        </div>
-
-        <div data-ng-controller="DOMController" class="col-lg-10">
-            <h3>Table Helper DOM Directive</h3>
-            <table-helper datasource="customers" columnmap="[{name: 'Name'}, {street: 'Street'}, {age: 'Age'}, {url: 'URL', hidden: true}]">
-            </table-helper>
-
-            <h3> Table Helper with NG Model </h3>
-            <table-helper-with-ng-model ng-model="customers" columnmap="[{name: 'Name'}, {street: 'Street'}, {age: 'Age'}, {url: 'URL', hidden: true}]">
-            </table-helper-with-ng-model>
-
-            <h3> Table Helper with Parse Directive </h3>
-
-            <table-helper-with-parse datasource="customers" columnmap="[{name: 'Name'}, {street: 'Street'}, {age: 'Age'}, {url: 'URL', hidden: true}]">
-            </table-helper-with-parse>
-            <h3> Geolocation Mapping Directive</h3>
-
-            <map-geo-location height='50' width='50'></map-geo-location>
-
-            <h3> Delay Bind Directive </h3>
-            <div>
-                <ul>
-                    <li ng-repeat="cust in customers" delay-bind="{{::cust.street}}" attribute="title" trigger="mouseenter">
-                        <a delay-bind="{{::cust.url}}" attribute="href" trigger="mouseenter">
-                            {{cust.name}}
-                        </a>
-                    </li>
-                </ul>
-                <div> Total Customers: {{::customers.length}}</div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
+            <div>
 
-            <h3> Without Controller </h3>
-            <without-controller datasource='customers'>
-            </without-controller>
+                <!-- <div class="col-lg-3" ng-controller="CustomersController">
+                    <hello-world>
+                    </hello-world>
+                    <shared-scope>
+                    </shared-scope>
+                    <isolated-scope name="{{customer.name}}" street="{{customer.street}}">
+                    </isolated-scope>
+                    <isolated-scope-with-equals datasource="customer">
+                    </isolated-scope-with-equals>
+                    <isolated-scope-with-function update-fn="updateFn(msg)" datasource="customer">
+                    </isolated-scope-with-function>
+                </div>
 
-            <h3> With Controller </h3>
-            <with-controller datasource='customers'>
-            </with-controller>
 
-            <input my-custom-input type="text" />
+                <div class="col-lg-2" ng-controller="DOMController">
+                    <h3> Simple Dom directive </h3>
+                    Mouse over the Click Me! <br /> <br />
+                    <div link-demo> Click Me! </div>
+                </div>
 
-        </div>
+                <div data-ng-controller="DOMController" class="col-lg-10">
+                    <h3>Table Helper DOM Directive</h3>
+                    <table-helper datasource="customers" columnmap="[{name: 'Name'}, {street: 'Street'}, {age: 'Age'}, {url: 'URL', hidden: true}]">
+                    </table-helper>
+
+                    <h3> Table Helper with NG Model </h3>
+                    <table-helper-with-ng-model ng-model="customers" columnmap="[{name: 'Name'}, {street: 'Street'}, {age: 'Age'}, {url: 'URL', hidden: true}]">
+                    </table-helper-with-ng-model>
+
+                    <h3> Table Helper with Parse Directive </h3>
+
+                    <table-helper-with-parse datasource="customers" columnmap="[{name: 'Name'}, {street: 'Street'}, {age: 'Age'}, {url: 'URL', hidden: true}]">
+                    </table-helper-with-parse>
+                    <h3> Geolocation Mapping Directive</h3>
+
+                    <map-geo-location height='50' width='50'></map-geo-location>
+
+                    <h3> Delay Bind Directive </h3>
+                    <div>
+                        <ul>
+                            <li ng-repeat="cust in customers" delay-bind="{{::cust.street}}" attribute="title" trigger="mouseenter">
+                                <a delay-bind="{{::cust.url}}" attribute="href" trigger="mouseenter">
+                            {{cust.name}}
+                        </a>
+                            </li>
+                        </ul>
+                        <div> Total Customers: {{::customers.length}}</div>
+
+                    </div>
+
+                    <h3> Without Controller </h3>
+                    <without-controller datasource='customers'>
+                    </without-controller>
+
+                    <h3> With Controller </h3>
+                    <with-controller datasource='customers'>
+                    </with-controller>
+
+                    <input my-custom-input type="text" />
+
+                </div>
+            </div> -->
+        </div> 
     </div>
-
 </body>
 
 </html>
