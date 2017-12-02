@@ -14,3 +14,83 @@
 
 
 
+/*
+ * Define the widths: play around with these to get a best fit.
+ */
+
+html, body {
+        height:100%;
+        min-height:100%;
+        overflow: hidden;
+}
+body {
+        display: flex;
+        flex-direction: column;
+}
+
+ .container-fluid{
+         height: 100%;
+         display: flex;
+         flex-direction: column;
+         height:100%;
+         min-height:100%;
+ 
+ }
+ .header{
+        flex: 0 0 auto; 
+ }
+
+ .footer{
+        flex: 0 0 auto;
+        background-color: #dcdcdc;  
+ }
+ .table-content {
+         max-height: 300px;
+        flex: 1 1 auto;
+        position: relative;/* need this to position inner content */
+        overflow-y: auto;    
+ }
+ .table-row {
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-grow: 0;
+        -webkit-flex-grow: 0;
+        flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+        width: 90%;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      .text {
+        flex-grow: 1;
+        -webkit-flex-grow: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding-right: 20px;
+      }
+      .text {
+        width: 160px;
+      }
+      .num {
+        width: 80px;
+      }
+      /*
+       * General good-look styles, not mandatory.
+       */
+      body {
+        font-size: 20px;
+      }
+      .table-row {
+        border-bottom: 2px solid #e0e0e0;
+        border-collapse: collapse;
+        padding-top: 5px;
+      }
+      .table-row.header {
+        background-color: #FFEEDB;
+        font-weight: bold;
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
