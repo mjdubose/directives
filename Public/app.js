@@ -67,6 +67,12 @@ if (count2 < $scope.language.length){
   $scope.selectedItem='default';
   $scope.selectedLanguage ='en';
 
+  $scope.people = [
+   { name: 'fred', age: 18},
+   { name: 'ralph', age: 18},
+   { name: 'bob', age: 18},
+   { name: 'george', age: 18}]
+
 });
 
 angular.module('ui.bootstrap.demo').directive('helloWorld', function () {
@@ -778,6 +784,21 @@ angular.module('ui.bootstrap.demo').directive('helpContent', function() {
 
     template: '<ng-include src="dynamicTemplateUrl"></ng-include>'
   };
+});
+
+angular  
+.module('ui.bootstrap.demo')
+.component('sampleComponent', {
+     templateUrl: '/Public/people-view.html',
+     bindings: {
+          name: "<"
+     },
+
+     controller: function() {
+              self= this;
+          // You can access the bindings here or inside your view
+          console.log(self.name) // -> World
+     }
 });
 
 
